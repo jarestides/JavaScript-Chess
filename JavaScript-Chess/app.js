@@ -2,18 +2,18 @@ const gameBoard = document.querySelector("#gameboard")
 const playerDiplay = document.querySelector("#player")
 const infoDisplay = document.querySelector("#info-display")
 const width = 8
-let playerMove = 'black'
-playerDiplay.textContent = 'Black'
+let playerMove = 'white'
+playerDiplay.textContent = 'White'
 
 const startPieces = [
-    rook, knight, bishop, queen, king, bishop, knight, rook,
+    rook, knight, bishop, king, queen, bishop, knight, rook,
     pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn,
     '', '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '',
     '', '', '', '', '', '', '', '',
     pawn, pawn, pawn, pawn, pawn, pawn, pawn, pawn,
-    rook, knight, bishop, queen, king, bishop, knight, rook
+    rook, knight, bishop, king, queen, bishop, knight, rook
 ]
 
 function createBoard(){
@@ -26,17 +26,17 @@ function createBoard(){
         const row = Math.floor((63 - i) / 8) + 1
 
         if (row % 2 === 0){
-            square.classList.add(i % 2 === 0 ? "beige" : "brown")
+            square.classList.add(i % 2 === 0 ? "light" : "dark")
         } else {
-            square.classList.add(i % 2 === 0 ? "brown" : "beige")
+            square.classList.add(i % 2 === 0 ? "dark" : "light")
         }
 
         if ( i <= 15) {
-            square.firstChild.firstChild.classList.add('black')
+            square.firstChild.firstChild.classList.add('white')
         }
 
         if ( i >= 48) {
-            square.firstChild.firstChild.classList.add('white')
+            square.firstChild.firstChild.classList.add('black')
         }
 
         gameBoard.append(square)
@@ -70,7 +70,7 @@ function dragDrop(e){
     const correctMove = draggedElement.firstChild.classList.contains(playerMove)
     const taken = e.target.classList.contains('piece')
     const valid = checkIfValid(e.target)
-    const opponentMove = playerMove === 'white' ? 'black' : 'white'
+    const opponentMove = playerMove === 'black' ? 'white' : 'black'
     const takenByOpponent = e.target.firstChild?.classList.contains(opponentMove)
 
     if (correctMove) {
@@ -113,14 +113,14 @@ function checkForWin(){
 }
 
 function changePlayer(){
-    if(playerMove === "black"){
+    if(playerMove === "white"){
         reverseIds()
-        playerMove = "white"
-        playerDiplay.textContent = 'White'
-    } else {
-        revertIds()
         playerMove = "black"
         playerDiplay.textContent = 'Black'
+    } else {
+        revertIds()
+        playerMove = "white"
+        playerDiplay.textContent = 'White'
     }
 }
 
